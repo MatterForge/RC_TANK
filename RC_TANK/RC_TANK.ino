@@ -64,8 +64,8 @@ void loop() {
 
 void runMaps() {
   //Forward
-  ch2Map = map(ch2Val,1040,1940,110,70);
-  ch2MapInv = map(ch2Val,1040,1940,70,110);
+  ch2Map = map(ch2Val,985,1995,110,70);
+  ch2MapInv = map(ch2Val,985,1995,70,110);
 
   ch2MapSmooth = (ch2Map * 0.25) + (ch2MapPrev * 0.75);
   ch2MapPrev = ch2MapSmooth;
@@ -86,10 +86,9 @@ void runMaps() {
   ch2MapInvSmooth = constrain(ch2MapInvSmooth,70,110);
 
   Serial.print("Ch2:");Serial.print(ch2MapSmooth);
-  Serial.print("   Ch2 INV:");Serial.print(ch2MapInvSmooth);
-  Serial.print("   Ch1:");Serial.print(ch1Map);
+  Serial.print("Ch2:");Serial.print(ch2MapInvSmooth);
 
-  if (ch2MapSmooth < 87 || ch2MapSmooth > 93 || ch1Map < -5 || ch1Map > 5) {
+  if (ch2MapSmooth < 87 || ch2MapSmooth > 90 || ch1Map < -5 || ch1Map > 5) {
     serv1.attach(7);
     serv2.attach(8);
     serv3.attach(9);
@@ -111,7 +110,7 @@ void runMaps() {
 
 void getPulses() {
   ch2Val = pulseIn(ch2, HIGH);
-  ch2Val = constrain(ch2Val,1040,1940);
+  ch2Val = constrain(ch2Val,985,1995);
   ch4Val = pulseIn(ch4, HIGH);
   ch4Val = constrain(ch4Val,1040,1940);
   ch1Val = pulseIn(ch1, HIGH);

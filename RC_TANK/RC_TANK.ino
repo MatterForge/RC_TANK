@@ -15,7 +15,7 @@ int cellVal;
 float volts;
 
 //CH2 R Front/Back  
-#define ch2 12
+#define ch2 8
 int ch2Val;
 int ch2Map;
 int ch2MapInv;
@@ -24,35 +24,24 @@ int ch2MapSmooth;
 int ch2MapPrev;
 int ch2MapInvSmooth;
 int ch2MapInvPrev;
-
-
-//CH4 L Turn
-#define ch4 13
-int ch4Val;
-int ch4Map;
-int ch4MapTurn;
-//smoothing
-int ch4Smooth;
-int ch4Prev;
-int ch4TurnSmooth;
-int ch4TurnPrev;
-
 //CH1 
-#define ch1 11
+#define ch1 9
 int ch1Val;
 int ch1Map;
 int ch1MapSmooth;
 int ch1MapPrev;
-
+#define ch5 7
+#define ch6 6
 
 void setup() {
   Serial.begin(115200);
-  pinMode(ch4,INPUT);
   pinMode(ch2,INPUT);
   pinMode(ch1,INPUT);
+  pinMode(ch5,INPUT);
+  pinMode(ch6,INPUT);
   serv1.detach();
   serv2.detach();
-  serv3.detach();
+  serv3.detach();  
   serv4.detach();
 }
 
@@ -89,10 +78,10 @@ void runMaps() {
   Serial.print("Ch2:");Serial.print(ch2MapInvSmooth);
 
   if (ch2MapSmooth < 87 || ch2MapSmooth > 90 || ch1Map < -5 || ch1Map > 5) {
-    serv1.attach(7);
-    serv2.attach(8);
-    serv3.attach(9);
-    serv4.attach(10);
+    serv1.attach(10);
+    serv2.attach(11);
+    serv3.attach(12);
+    serv4.attach(13);
     serv1.write(ch2MapSmooth);
     serv2.write(ch2MapSmooth);
     serv3.write(ch2MapInvSmooth);
@@ -111,8 +100,6 @@ void runMaps() {
 void getPulses() {
   ch2Val = pulseIn(ch2, HIGH);
   ch2Val = constrain(ch2Val,985,1995);
-  ch4Val = pulseIn(ch4, HIGH);
-  ch4Val = constrain(ch4Val,1040,1940);
   ch1Val = pulseIn(ch1, HIGH);
   ch1Val = constrain(ch1Val,1040,1940);
 }
